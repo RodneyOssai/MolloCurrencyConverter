@@ -10,7 +10,7 @@ interface FetchRatesApi {
 
 
     @GET("latest?access_key=d7704455e1d8f52b1c94c5d3a61bf05c")
-    fun getLatestRates(): Call<JsonObject>
+   suspend fun getLatestRates(): Call<JsonObject>
 
 
 }
