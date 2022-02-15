@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Mollo Currency Converter</string>
+    <string name="mid_market_exchange_rate_a_current_time">Mid-market exchange rate a ${current time}</string>
+</resources>
