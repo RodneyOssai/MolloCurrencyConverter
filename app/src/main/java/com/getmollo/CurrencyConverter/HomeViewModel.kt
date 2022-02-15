@@ -14,7 +14,7 @@ import retrofit2.Response
 import java.security.AccessController.getContext
 
 
-class HomeViewModel(private val repository: SpinnerItemRepository,application: Application) : AndroidViewModel() {
+class HomeViewModel(private val repository: SpinnerItemRepository,application: Application) : AndroidViewModel(application) {
     var fetchratesApi = RetrofitClient.fetchRatesAPIService
     val currencyList: LiveData<List<SpinnerItem?>?>? = repository.currenciesList
 
@@ -46,10 +46,13 @@ class HomeViewModel(private val repository: SpinnerItemRepository,application: A
                         //We use th
                         val dynamicValue =
                             ratesObject.getJSONObject(dynamicKey).optDouble(dynamicKey)
-                        val drawableResId: Int = getApplication<Application>().applicationContext.resources.getIdentifier(dynamicKey, "drawable", getApplication<Application>().)
-                        )
-                        var item: SpinnerItem = SpinnerItem(dynamicKey, 11, dynamicValue)
+                        val drawableResId: Int = getApplication<Application>().applicationContext.resources.getIdentifier(dynamicKey, "drawable", getApplication<Application>().applicationContext.packageName)
 
+                        var item: SpinnerItem = SpinnerItem(dynamicKey, drawableResId, dynamicValue)
+                        //Add to room Database so it can be retreived using lifedata
+                        viewModelScope.launch {
+                            repository.insert(item)
+                        }
                     }
                 }
 
