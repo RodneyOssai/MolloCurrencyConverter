@@ -9,7 +9,7 @@ interface SpinnerItemDao {
     @Insert
     fun insert(currency: SpinnerItem?)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(currency: SpinnerItem?)
 
     @Delete
@@ -21,6 +21,6 @@ interface SpinnerItemDao {
     @get:Query("SELECT * FROM currency_table")
     val currenciesList: LiveData<List<SpinnerItem?>?>?
 
-    @Query("SELECT * FROM currency_table WHERE id = :id")
-    fun getSelectedCurrency(id: Int): Int
+    @Query("SELECT * FROM currency_table WHERE currencyTicker = :ticker")
+    fun getSelectedCurrency(ticker: String):SpinnerItem
 }

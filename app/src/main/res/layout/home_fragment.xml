@@ -109,9 +109,11 @@
                 app:boxStrokeColor="@color/mtrl_textinput_default_box_stroke_color">
 
                 <AutoCompleteTextView
+                    android:id="@+id/from_currency_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
+                    android:inputType="none"
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -131,6 +133,7 @@
                 android:hint="PLN">
 
                 <AutoCompleteTextView
+                    android:id="@+id/to_currency_dropdown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none" />

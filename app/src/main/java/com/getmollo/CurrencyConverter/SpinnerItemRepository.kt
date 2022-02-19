@@ -21,6 +21,13 @@ class SpinnerItemRepository(private val spinnerDao: SpinnerItemDao) {
     suspend fun insert(currency: SpinnerItem) {
         spinnerDao.insert(currency)
     }
+    fun update(currency: SpinnerItem) {
+        spinnerDao.update(currency)
+    }
+    fun getSelectedCurrency(ticker: String) {
+        spinnerDao.getSelectedCurrency(ticker)
+    }
+
 
 
 }

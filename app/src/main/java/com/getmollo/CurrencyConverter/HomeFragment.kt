@@ -1,11 +1,12 @@
 package com.getmollo.CurrencyConverter
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.getmollo.CurrencyConverter.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
@@ -16,7 +17,7 @@ class HomeFragment : Fragment() {
     private var _binding: HomeFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,10 +27,25 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        // TODO: Use the ViewModel
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var  spinnerItemsList:MutableList<SpinnerItem> = ArrayList()
+        val adapter = SpinnerAdapter(context!!,spinnerItemsList)
+        binding.toCurrencyDropdown.setAdapter(adapter)
+        viewModel.currencyList?.observe(this, Observer<List<SpinnerItem?>?>{ spinnerItems ->
+            // update UI
+            for (item in spinnerItems) {
+                if (item != null) {
+                    spinnerItemsList.add(SpinnerItem(item.currencyTicker,item.currencyLogo,item.fromEurValue))
+                }
+            }
+            adapter.notifyDataSetChanged();
+        })
+
+
+
+        binding.toCurrencyDropdown.setAdapter(adapter)
     }
 
 }
